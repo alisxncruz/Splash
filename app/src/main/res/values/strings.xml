@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">MySplash</string>
+    <string name="user">Nombre de Usuario:</string>
+    <string name="pass">Contraseña</string>
+    <string name="btnAcept">Aceptar</string>
+    <string name="btnOlvide">Olvide contraseña</string>
+    <string name="btnCrea">Registrarme</string>
+    <string name="text1">R E G I S T R O</string>
+</resources>
