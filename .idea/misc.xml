@@ -3,8 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/5to Semestre/Automatizacion de pruebas/MySplash/app/src/main/res/layout/activity_inicio_s.xml" value="0.25885416666666666" />
         <entry key="..\:/5to Semestre/Automatizacion de pruebas/MySplash/app/src/main/res/layout/activity_login.xml" value="0.3319746376811594" />
         <entry key="..\:/5to Semestre/Automatizacion de pruebas/MySplash/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/5to Semestre/Automatizacion de pruebas/MySplash/app/src/main/res/layout/activity_olvide_psw.xml" value="0.27291666666666664" />
+        <entry key="..\:/5to Semestre/Automatizacion de pruebas/MySplash/app/src/main/res/layout/activity_registro.xml" value="0.22327898550724637" />
       </map>
     </option>
   </component>
