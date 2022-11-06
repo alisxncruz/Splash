@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,6 +83,7 @@ public class Login extends AppCompatActivity {
             for(infoRegistro infos : list){
                 if(infos.getUser().equals(usuario) && infos.getPswd().equals(contrasena)){
                     Intent intent = new Intent(Login.this, Sesion.class);
+                    intent.putExtra("Objeto", String.valueOf(infos));
                     startActivity(intent);
                     i=1;
                 }
