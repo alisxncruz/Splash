@@ -1,6 +1,8 @@
 package com.example.myjson;
 
-public class infoRegistro {
+import java.io.Serializable;
+
+public class infoRegistro implements Serializable {
     private String nomCompleto;
     private int edad;
     private String telefono;

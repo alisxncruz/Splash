@@ -83,7 +83,7 @@ public class Login extends AppCompatActivity {
             for(infoRegistro infos : list){
                 if(infos.getUser().equals(usuario) && infos.getPswd().equals(contrasena)){
                     Intent intent = new Intent(Login.this, Sesion.class);
-                    intent.putExtra("Objeto", String.valueOf(infos));
+                    intent.putExtra("Objeto", infos);
                     startActivity(intent);
                     i=1;
                 }
