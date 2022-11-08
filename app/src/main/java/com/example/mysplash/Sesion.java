@@ -26,7 +26,7 @@ public class Sesion extends AppCompatActivity {
                 if(object != null){
                     if(object instanceof infoRegistro){
                         infos = (infoRegistro)object;
-                        userr.setText(infos.get);
+                        userr.setText(infos.getUser());
                     }
                 }
             }
