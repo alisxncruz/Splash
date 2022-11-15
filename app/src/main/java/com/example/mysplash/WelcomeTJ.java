@@ -20,13 +20,13 @@ public class WelcomeTJ extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_tj);
 
-        listV = (ListView) findViewById(R.id.list);
+        listV = (ListView) findViewById(R.id.listViewId);
         list = new ArrayList<String>();
 
-        for( int i = 0; i < 100; i++){
+        for( int i = 0; i < 50; i++){
             list.add(String.format("Contraseña%d", i+1));
         }
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.activity_edit_list, R.id.textView, list);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.activity_edit_list, R.id.textView20, list);
         listV.setAdapter(arrayAdapter);
 
     }
