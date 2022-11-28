@@ -13,6 +13,7 @@ import android.widget.RadioButton;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.example.myjson.infoC;
 import com.example.myjson.infoRegistro;
 import com.google.gson.Gson;
 
@@ -39,7 +40,16 @@ public class Registro extends AppCompatActivity {
     public static List<infoRegistro> list = new ArrayList<infoRegistro>();
     public static final String archivo = "registro.json";
     private static final String TAG = "Registro";
+    public static final String KEY = "+4xij6jQRSBdCymMxweza/uMYo+o0EUg";
+    public MyDesUtil myDesUtil= new MyDesUtil().addStringKeyBase64(KEY);
 
+    infoRegistro infos = null;
+    Gson gson = null;
+    String usr = null;
+    String email = null;
+    String mensaje = null;
+    List<infoRegistro> lis = new ArrayList<infoRegistro>();
+    List<infoC> listaC;
 
 
     @Override
@@ -47,10 +57,8 @@ public class Registro extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
 
-        infoRegistro infos = null;
-        Gson gson = null;
-        String json = null;
-        String mensaje = null;
+        listaC = new ArrayList<>();
+        infoC info2 = null;
 
         EditText nomCompleto = findViewById(R.id.nomCompleto);
         EditText edad = findViewById(R.id.edad);
@@ -129,6 +137,7 @@ public class Registro extends AppCompatActivity {
                         infos.setSexo(tipoSexo);
                         infos.setTelefono(String.valueOf(telefono.getText()));
                         infos.setUser(usuario);
+                        infos.setPassword(listaC);
                         ListJson(infos, list);
 
                     } else {
@@ -144,6 +153,7 @@ public class Registro extends AppCompatActivity {
                             infos.setSexo(tipoSexo);
                             infos.setTelefono(String.valueOf(telefono.getText()));
                             infos.setUser(usuario);
+                            infos.setPassword(listaC);
                             ListJson(infos, list);
                         }
                     }
@@ -190,6 +200,8 @@ public class Registro extends AppCompatActivity {
             else
             {
                 Log.d(TAG, json);
+                json=myDesUtil.cifrar(json);
+                Log.d(TAG, json);
                 writeFile(json);
             }
             Toast.makeText(getApplicationContext(), "Ok", Toast.LENGTH_LONG).show();
@@ -233,6 +245,7 @@ public class Registro extends AppCompatActivity {
             fileInputStream = new FileInputStream(file);
             fileInputStream.read(bytes);
             json=new String(bytes);
+            json = myDesUtil.desCifrar(json);
             Log.d(TAG,json);
         } catch (FileNotFoundException e) {
             e.printStackTrace();

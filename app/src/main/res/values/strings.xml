@@ -7,6 +7,6 @@
     <string name="btnCrea">Registrarme</string>
     <string name="text1">R E G I S T R O</string>
     <string name="olv">¿Has olvidado tu contraseña?\n¡Lo sentimos!</string>
-    <string name="triste">:(</string>
+    <string name="triste">Usuario:\n\n\n\n\n Correo:</string>
     <string name="Incio">BIENVENID@ \nAL INICIO</string>
 </resources>

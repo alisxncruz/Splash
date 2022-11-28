@@ -1,6 +1,8 @@
 package com.example.myjson;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class infoRegistro implements Serializable {
     private String nomCompleto;
@@ -11,6 +13,7 @@ public class infoRegistro implements Serializable {
     private String user;
     private String[] redesS;
     private Boolean sexo;
+    private List<infoC> password = new ArrayList<>();
 
     public String getNomCompleto() {
         return nomCompleto;
@@ -76,6 +79,11 @@ public class infoRegistro implements Serializable {
         this.sexo = sexo;
     }
 
-
+    public List<infoC> getPassword(){
+        return password;
+    }
+    public void setPassword(List<infoC>contraseñas){
+        this.password = password;
+    }
 
 }

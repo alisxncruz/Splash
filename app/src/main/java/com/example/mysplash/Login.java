@@ -26,11 +26,17 @@ import java.util.List;
 
 public class Login extends AppCompatActivity {
 
-    private List<infoRegistro> list;
-    public static String TAG = "Login";
+    public static final String KEY = "+4xij6jQRSBdCymMxweza/uMYo+o0EUg";
+    private String testClaro = "Hola mundo";
+    private String testDescifrado;
+
+    public static List<infoRegistro> list;
+    public static String TAG = "message";
+    public static String TOG = "error";
     public static  String json = null;
     public static String usuario;
     public static String contrasena;
+    public MyDesUtil myDesUtil = new MyDesUtil().addStringKeyBase64(KEY);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +88,7 @@ public class Login extends AppCompatActivity {
         }else{
             for(infoRegistro infos : list){
                 if(infos.getUser().equals(usuario) && infos.getPswd().equals(contrasena)){
-                    Intent intent = new Intent(Login.this, Sesion.class);
+                    Intent intent = new Intent(Login.this, WelcomeTJ.class);
                     intent.putExtra("Objeto", infos);
                     startActivity(intent);
                     i=1;
@@ -106,13 +112,14 @@ public class Login extends AppCompatActivity {
             fileInputStream = new FileInputStream(file);
             fileInputStream.read(bytes);
             json=new String(bytes);
+            json = myDesUtil.desCifrar(json);
             Log.d(TAG,json);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return false;
+        return true;
     }
 
     public void jsonList (String json){
