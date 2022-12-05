@@ -14,6 +14,6 @@ public class EditList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_list);
 
-        Sesion.infos = null;
+        WelcomeTJ.info = null;
     }
 }

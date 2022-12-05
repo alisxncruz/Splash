@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.myjson.infoC;
@@ -17,8 +18,9 @@ public class MyAdapter extends BaseAdapter implements Serializable {
     private List<infoC> list;
     private Context context;
     private LayoutInflater layoutInflater;
-
-    public MyAdapter (List<infoC> list, Context context){
+    public static String TAG="Hola";
+    public MyAdapter (List<infoC> list, Context context)
+    {
 
         this.list =list;
         this.context = context;
@@ -54,9 +56,11 @@ public class MyAdapter extends BaseAdapter implements Serializable {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+        TextView redSocial = null;
+        TextView pswd = null ;
         view = layoutInflater.inflate(R.layout.activity_edit_list, null);
-        TextView redSocial = view.findViewById(R.id.redS);
-        TextView pswd = view.findViewById(R.id.passG);
+        redSocial = view.findViewById(R.id.redS);
+        pswd = view.findViewById(R.id.passG);
         redSocial.setText(String.valueOf(list.get(i).getRedPass()));
         pswd.setText(String.valueOf(list.get(i).getPass()));
         return view;

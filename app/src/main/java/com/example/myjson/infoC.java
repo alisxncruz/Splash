@@ -2,7 +2,7 @@ package com.example.myjson;
 
 import java.io.Serializable;
 
-public class infoC implements Serializable {
+public class infoC extends infoRegistro implements Serializable {
 
     private String pass;
     private String redPass;

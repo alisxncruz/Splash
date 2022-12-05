@@ -95,13 +95,14 @@
                         app:layout_constraintVertical_bias="0.495" />
 
                     <EditText
-                        android:id="@+id/editTextRS"
-                        android:layout_width="192dp"
-                        android:layout_height="30dp"
+                        android:id="@+id/editTextR"
+                        android:layout_width="195dp"
+                        android:layout_height="32dp"
                         android:layout_marginBottom="52dp"
                         android:ems="10"
                         android:inputType="textPersonName"
                         android:textColor="#01363E"
+                        android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.705"
@@ -116,6 +117,7 @@
                         android:ems="10"
                         android:inputType="textPersonName"
                         android:textColor="#000000"
+                        android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.695"
@@ -124,59 +126,48 @@
                         app:layout_constraintVertical_bias="0.527" />
 
                     <Button
-                        android:id="@+id/mas"
-                        android:layout_width="106dp"
-                        android:layout_height="40dp"
+                        android:id="@+id/delete"
+                        android:layout_width="119dp"
+                        android:layout_height="34dp"
+                        android:layout_marginStart="232dp"
                         android:backgroundTint="#09DFDF"
-                        android:text="Agregar"
+                        android:text="Eliminar"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.953" />
+
+                    <Button
+                        android:id="@+id/editing"
+                        android:layout_width="119dp"
+                        android:layout_height="34dp"
+                        android:backgroundTint="#09DFDF"
+                        android:text="Editar"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.46"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.953" />
+
+                    <Button
+                        android:id="@+id/mas"
+                        android:layout_width="77dp"
+                        android:layout_height="36dp"
+                        android:backgroundTint="#09DFDF"
+                        android:text="+"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.648"
+                        app:layout_constraintHorizontal_bias="0.052"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.96" />
+                        app:layout_constraintVertical_bias="0.952" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
         </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="61dp"
-        android:orientation="vertical">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <Button
-                android:id="@+id/editing"
-                android:layout_width="119dp"
-                android:layout_height="34dp"
-                android:backgroundTint="#09DFDF"
-                android:text="Editar"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.754"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.25" />
-
-            <Button
-                android:id="@+id/delete"
-                android:layout_width="119dp"
-                android:layout_height="34dp"
-                android:backgroundTint="#09DFDF"
-                android:text="Eliminar"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.191"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.238" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
     <LinearLayout

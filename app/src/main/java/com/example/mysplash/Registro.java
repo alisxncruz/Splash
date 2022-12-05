@@ -38,6 +38,7 @@ public class Registro extends AppCompatActivity {
     public static boolean desliza = false;
     public static boolean  tipoSexo= false;
     public static List<infoRegistro> list = new ArrayList<infoRegistro>();
+    public static List<infoC> lista;
     public static final String archivo = "registro.json";
     private static final String TAG = "Registro";
     public static final String KEY = "+4xij6jQRSBdCymMxweza/uMYo+o0EUg";
@@ -48,8 +49,6 @@ public class Registro extends AppCompatActivity {
     String usr = null;
     String email = null;
     String mensaje = null;
-    List<infoRegistro> lis = new ArrayList<infoRegistro>();
-    List<infoC> listaC;
 
 
     @Override
@@ -57,7 +56,7 @@ public class Registro extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
 
-        listaC = new ArrayList<>();
+        lista = new ArrayList<>();
         infoC info2 = null;
 
         EditText nomCompleto = findViewById(R.id.nomCompleto);
@@ -137,7 +136,7 @@ public class Registro extends AppCompatActivity {
                         infos.setSexo(tipoSexo);
                         infos.setTelefono(String.valueOf(telefono.getText()));
                         infos.setUser(usuario);
-                        infos.setPassword(listaC);
+                        infos.setPassword(lista);
                         ListJson(infos, list);
 
                     } else {
@@ -153,7 +152,7 @@ public class Registro extends AppCompatActivity {
                             infos.setSexo(tipoSexo);
                             infos.setTelefono(String.valueOf(telefono.getText()));
                             infos.setUser(usuario);
-                            infos.setPassword(listaC);
+                            infos.setPassword(lista);
                             ListJson(infos, list);
                         }
                     }

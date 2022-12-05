@@ -38,7 +38,7 @@ public class OlvidePsw extends AppCompatActivity {
     public static String cadena = null;
     public MyDesUtil myDesUtil = new MyDesUtil().addStringKeyBase64(Registro.KEY);
     public String user = null;
-    public String correo, msj, msj2;
+    public String correo, msj;
     EditText usuario, email;
 
     @Override
@@ -56,6 +56,7 @@ public class OlvidePsw extends AppCompatActivity {
             public void onClick(View view) {
 
                 user=String.valueOf(usuario.getText());
+                correo = String.valueOf(email.getText());
                 if(user.equals("") && email.equals("")){
                     Toast.makeText(getApplicationContext(), "Llena los campos", Toast.LENGTH_LONG).show();
                 }else{
@@ -66,16 +67,14 @@ public class OlvidePsw extends AppCompatActivity {
                             correo = infos.getEmail();
                             String contrasena = infos.getPswd();
                             String nueva = String.format("%d", (int)(Math.random()*900));
-                            msj = "<html><h1>Olvide Contraseña</h1></html>";
-                            msj2 = "<html><body><h3>Su antigua contraseña: " + contrasena+ " y su nueva contraseña es: " 
-                            +nueva+"</h3></body><html>";
+                            msj = "<html><body><h1>Su antigua contraseña:" + contrasena + " y su nueva contraseña: " + nueva+"</h1></body></html>";
                             correo = myDesUtil.cifrar(correo);
                             msj = myDesUtil.cifrar(msj);
                             list.get(j).setPswd(nueva);
                             Log.i(TAG, nueva);
                             Log.i(TAG, list.get(j).getPswd());
-                            i=1;
                             JsonList(list);
+                            i=1;
                         }
                         j++;
                     }
@@ -85,14 +84,14 @@ public class OlvidePsw extends AppCompatActivity {
                         Log.i(TAG,msj);
                         if( Enviar( correo,msj ) )
                         {
-                            Toast.makeText(getBaseContext() , "Se envío el texto" , Toast.LENGTH_LONG );
+                            Toast.makeText(getBaseContext() , "Se envío el texto" , Toast.LENGTH_LONG ).show();
                             return;
                         }
-                        Toast.makeText(getBaseContext() , "Error en el envío" , Toast.LENGTH_LONG );
+                        Toast.makeText(getBaseContext() , "Error en el envío" , Toast.LENGTH_LONG ).show();
                     }else{
                         if(i==0){
                             Log.i(TAG,"no hay usuarios");
-                            Toast.makeText(getBaseContext() , "No existen usuarios" , Toast.LENGTH_LONG );
+                            Toast.makeText(getBaseContext() , "No existen usuarios" , Toast.LENGTH_LONG ).show();
                             return;
                         }
                     }
