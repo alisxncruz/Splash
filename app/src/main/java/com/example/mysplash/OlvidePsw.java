@@ -68,7 +68,52 @@ public class OlvidePsw extends AppCompatActivity {
                             pass = info.getPswd();
                             nuevapass = String.format("%d", (int)(Math.random()*1500));
                             nueva2 = Digest.bytesToHex(Digest.createSha1(nuevapass));
-                            //msj = "";
+                            //msj = "<!DOCTYPE html>\n" +
+                            //                                  "<html lang=\"en\">\n" +
+                            //                                    "\n" +
+                            //                                    "<head>\n" +
+                            //                                    "    <meta charset=\"UTF-8\">\n" +
+                            //                                    "    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n" +
+                            //                                    "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
+                            //                                    "    <title>RECUPERA TU CONTRASEÑA</title>\n" +
+                            //                                    "    <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n" +
+                            //                                    "    <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n" +
+                            //                                    "    <link href=\"https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap\" rel=\"stylesheet\">\n" +
+                            //                                    "    <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD\" crossorigin=\"anonymous\">\n" +
+                            //                                    "    <style>\n" +
+                            //                                    "        body{\n" +
+                            //                                    "            font-family: 'Montserrat', sans-serif;\n" +
+                            //                                    "            align-content: center;\n" +
+                            //                                    "        }\n" +
+                            //                                    "        img{\n" +
+                            //                                    "            width: 350px;\n" +
+                            //                                    "        }\n" +
+                            //                                    "        .centrado{\n" +
+                            //                                    "            display:flex;\n" +
+                            //                                    "            justify-content: center;\n" +
+                            //                                    "            align-items: center;\n" +
+                            //                                    "        }\n" +
+                            //                                    "        \n" +
+                            //                                    "    </style>\n" +
+                            //                                    "</head>\n" +
+                            //                                    "<body>\n" +
+                            //                                    "    <div class=\"container centrado\">\n" +
+                            //                                    "        <div class=\"p-4\">\n" +
+                            //                                    "            <div class=\"p-4 centrado\" style=\"background: linear-gradient(50deg, #00B1D9,#049DBF,#005D98); border-radius: 15px;\">\n" +
+                            //                                    "                <h2 style=\"font-weight: 800; color: white;\">Recupera tu contraseña</h2>\n" +
+                            //                                    "            </div>\n" +
+                            //                                    "            \n" +
+                            //                                    "            <hr>\n" +
+                            //                                    "            <img src=\"https://www.puppies.com.au/uploads/1/0/5/8/105867835/corgi-cat-500-500px_orig.png\" alt=\"Perrito\">\n" +
+                            //                                    "            <div>\n" +
+                            //                                    "                <p style=\"font-size: 30px;\" class=\"centrado\">Tu nueva contraseña es:</p>\n" +
+                            //                                    "                <p style=\"font-size: 30px; font-weight: 800;\" class=\"centrado\"> " + nuevapass + "</p>\n" +
+                            //                                    "        </div>\n" +
+                            //                                    "\n" +
+                            //                                    "        </div>\n" +
+                            //                                    "        \n" +
+                            //                                    "    </div>\n" +
+                            //                                    "</html>";
                             correo = myDesUtil.cifrar(correo);
                             msj = myDesUtil.cifrar(msj);
                             list.get(j).setPswd(nueva2);

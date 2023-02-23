@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 public class infoC extends infoRegistro implements Serializable {
 
+    private int id_pass;
     private String pass;
     private String redPass;
 
@@ -23,5 +24,13 @@ public class infoC extends infoRegistro implements Serializable {
 
     public void setRedPass(String redPass) {
         this.redPass = redPass;
+    }
+
+    public int getId_pass() {
+        return id_pass;
+    }
+
+    public void setId_pass(int id_pass) {
+        this.id_pass = id_pass;
     }
 }

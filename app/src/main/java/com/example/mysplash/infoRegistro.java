@@ -63,7 +63,7 @@ public class infoRegistro implements Serializable {
         this.user = user;
     }
 
-    public String[] getRedesS() {
+    public Byte getRedesS() {
         return redesS;
     }
 
