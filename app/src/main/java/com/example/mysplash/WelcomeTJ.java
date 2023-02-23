@@ -18,8 +18,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.myjson.infoC;
-import com.example.myjson.infoRegistro;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -39,7 +37,6 @@ public class WelcomeTJ extends AppCompatActivity {
     public static String json = null;
     public static ListView listView;
     private List<infoC> listaC;
-    String aux;
     public int pos = 0;
     public static infoRegistro info = null;
     EditText editTextR, editTextP;

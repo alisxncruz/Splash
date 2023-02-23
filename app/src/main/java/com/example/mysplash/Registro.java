@@ -13,8 +13,6 @@ import android.widget.RadioButton;
 import android.widget.Switch;
 import android.widget.Toast;
 
-import com.example.myjson.infoC;
-import com.example.myjson.infoRegistro;
 import com.google.gson.Gson;
 
 import java.io.File;

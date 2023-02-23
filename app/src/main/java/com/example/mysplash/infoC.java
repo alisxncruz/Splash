@@ -1,4 +1,6 @@
-package com.example.myjson;
+package com.example.mysplash;
+
+import com.example.mysplash.infoRegistro;
 
 import java.io.Serializable;
 

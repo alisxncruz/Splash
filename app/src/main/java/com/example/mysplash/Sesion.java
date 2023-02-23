@@ -8,8 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.myjson.infoRegistro;
-
 public class Sesion extends AppCompatActivity {
     String auxiliar;
     public static infoRegistro infos = null;

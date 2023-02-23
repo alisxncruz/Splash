@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.myjson.infoRegistro;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -35,20 +34,20 @@ public class Login extends AppCompatActivity {
     public static String TOG = "error";
     public static  String json = null;
     public static String usuario;
-    public static String contrasena;
+    public static String pass;
     public MyDesUtil myDesUtil = new MyDesUtil().addStringKeyBase64(KEY);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         Button button = findViewById(R.id.registraId);
         Button button1 = findViewById(R.id.forgetId);
         Button button2 = findViewById(R.id.loginId);
         EditText user1 = findViewById(R.id.userNameId);
-        EditText pass = findViewById(R.id.passwordId);
+        EditText contra = findViewById(R.id.passwordId);
         AddLIsteners();
         jsonList(json);
 
@@ -57,8 +56,9 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 usuario = String.valueOf(user1.getText());
-                contrasena = Digest.bytesToHex(Digest.createSha1(String.valueOf(pass.getText())));
-                paginaInicio(usuario, contrasena);
+                pass = Digest.bytesToHex(Digest.createSha1(String.valueOf(contra.getText())));
+                //pass=String.valueOf(pswd.getText());
+                paginaInicio(usuario, pass);
             }
         });
 
@@ -82,21 +82,17 @@ public class Login extends AppCompatActivity {
     }
 
     public void paginaInicio(String usuario , String contrasena){
-        int i=0;
-        if(usuario.equals("")||contrasena.equals("")){
-            Toast.makeText(getApplicationContext(), "Necesitas Usuario y Contraseña", Toast.LENGTH_LONG).show();
-        }else{
-            for(infoRegistro infos : list){
-                if(infos.getUser().equals(usuario) && infos.getPswd().equals(contrasena)){
-                    Intent intent = new Intent(Login.this, WelcomeTJ.class);
-                    intent.putExtra("Objeto", infos);
-                    startActivity(intent);
-                    i=1;
-                }
+        Boolean ingresa = Boolean.FALSE;
+        for(infoRegistro info : list){
+            if(info.getUser().equals(usuario) && info.getPswd().equals(pass)){
+                Intent intent = new Intent(Login.this, WelcomeTJ.class);
+                intent.putExtra("Info", info);
+                startActivity(intent);
+                ingresa = Boolean.TRUE;
             }
-            if(i==0){
-                Toast.makeText(getApplicationContext(), "El usuario o contraseña son incorrectos", Toast.LENGTH_LONG).show();
-            }
+        }
+        if(ingresa == Boolean.FALSE){
+            Toast.makeText(getApplicationContext(), "Usuario y/o contraseña incorrectos", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -113,7 +109,7 @@ public class Login extends AppCompatActivity {
             fileInputStream.read(bytes);
             json=new String(bytes);
             json = myDesUtil.desCifrar(json);
-            Log.d(TAG,json);
+            //Log.d(TAG,json);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -123,11 +119,17 @@ public class Login extends AppCompatActivity {
     }
 
     public void jsonList (String json){
+
+        Button button1 = findViewById(R.id.loginId);
+        Button button2 = findViewById(R.id.forgetId);
+
         Gson gson = null;
         String mensaje = null;
         if (json == null || json.length() == 0)
         {
             Toast.makeText(getApplicationContext(), "Error json null or empty", Toast.LENGTH_LONG).show();
+            button1.setEnabled(false);
+            button2.setEnabled(false);
             return;
         }
         gson = new Gson();
@@ -136,6 +138,8 @@ public class Login extends AppCompatActivity {
         if (list == null || list.size() == 0 )
         {
             Toast.makeText(getApplicationContext(), "Error list is null or empty", Toast.LENGTH_LONG).show();
+            button1.setEnabled(false);
+            button2.setEnabled(false);
             return;
         }
     }

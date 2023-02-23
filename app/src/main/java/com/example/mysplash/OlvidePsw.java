@@ -2,6 +2,7 @@ package com.example.mysplash;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,7 +16,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.myjson.infoRegistro;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -35,11 +35,11 @@ public class OlvidePsw extends AppCompatActivity {
     public static List<infoRegistro> list;
     public static String json = null;
     public static String TAG = "Hola";
-    public static String cadena = null;
+    public static String TOG = "Error";
     public MyDesUtil myDesUtil = new MyDesUtil().addStringKeyBase64(Registro.KEY);
-    public String user = null;
-    public String correo, msj;
-    EditText usuario, email;
+    public String usuario = null;
+    public String correo, msj,pass,nuevapass,nueva2;
+    EditText user, email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class OlvidePsw extends AppCompatActivity {
         setContentView(R.layout.activity_olvide_psw);
 
         Button buttonRec = findViewById(R.id.button);
-        usuario= findViewById(R.id.usuarioOlv);
+        user= findViewById(R.id.usuarioOlv);
         email=findViewById(R.id.correoOlv);
         list = Login.list;
 
@@ -55,23 +55,24 @@ public class OlvidePsw extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                user=String.valueOf(usuario.getText());
+                usuario = String.valueOf(user.getText());
                 correo = String.valueOf(email.getText());
-                if(user.equals("") && email.equals("")){
+                if(user.length()==0 || correo.length()==0){
                     Toast.makeText(getApplicationContext(), "Llena los campos", Toast.LENGTH_LONG).show();
                 }else{
                     int i = 0;
                     int j=0;
-                    for(infoRegistro infos : list){
-                        if (infos.getUser().equals(user)|| infos.getEmail().equals(email)){
-                            correo = infos.getEmail();
-                            String contrasena = infos.getPswd();
-                            String nueva = String.format("%d", (int)(Math.random()*900));
-                            msj = "<html><body><h1>Su antigua contraseña:" + contrasena + " y su nueva contraseña: " + nueva+"</h1></body></html>";
+                    for(infoRegistro info : list){
+                        if (info.getUser().equals(user)|| info.getEmail().equals(email)){
+                            correo = info.getEmail();
+                            pass = info.getPswd();
+                            nuevapass = String.format("%d", (int)(Math.random()*1500));
+                            nueva2 = Digest.bytesToHex(Digest.createSha1(nuevapass));
+                            //msj = "";
                             correo = myDesUtil.cifrar(correo);
                             msj = myDesUtil.cifrar(msj);
-                            list.get(j).setPswd(nueva);
-                            Log.i(TAG, nueva);
+                            list.get(j).setPswd(nueva2);
+                            Log.i(TAG, nueva2);
                             Log.i(TAG, list.get(j).getPswd());
                             JsonList(list);
                             i=1;
@@ -79,12 +80,15 @@ public class OlvidePsw extends AppCompatActivity {
                         j++;
                     }
                     if(i==1){
-                        Log.i(TAG,user);
+                        Log.i(TAG,usuario);
                         Log.i(TAG,correo);
                         Log.i(TAG,msj);
                         if( Enviar( correo,msj ) )
                         {
                             Toast.makeText(getBaseContext() , "Se envío el texto" , Toast.LENGTH_LONG ).show();
+                            Intent intent = new Intent(OlvidePsw.this, Login.class);
+                            startActivity(intent);
+                            finish();
                             return;
                         }
                         Toast.makeText(getBaseContext() , "Error en el envío" , Toast.LENGTH_LONG ).show();
@@ -138,7 +142,7 @@ public class OlvidePsw extends AppCompatActivity {
         return true;
     }
 
-    public boolean AddList(){
+    /*public boolean AddList(){
         if(!isFileExists()) {
             return false;
         }
@@ -158,7 +162,7 @@ public class OlvidePsw extends AppCompatActivity {
             e.printStackTrace();
         }
         return false;
-    }
+    }/*/
 
     private File getFile( )
     {

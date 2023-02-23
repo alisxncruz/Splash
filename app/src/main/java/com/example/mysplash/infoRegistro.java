@@ -1,4 +1,4 @@
-package com.example.myjson;
+package com.example.mysplash;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -6,7 +6,7 @@ import java.util.List;
 
 public class infoRegistro implements Serializable {
     private String nomCompleto;
-    private int edad;
+    private String edad;
     private String telefono;
     private String email;
     private String pswd;
@@ -23,11 +23,11 @@ public class infoRegistro implements Serializable {
         this.nomCompleto = nomCompleto;
     }
 
-    public int getEdad() {
+    public String getEdad() {
         return edad;
     }
 
-    public void setEdad(int edad) {
+    public void setEdad(String edad) {
         this.edad = edad;
     }
 
@@ -79,11 +79,11 @@ public class infoRegistro implements Serializable {
         this.sexo = sexo;
     }
 
-    public List<infoC> getPassword(){
+    public List<infoC> getPassword() {
         return password;
     }
-    public void setPassword(List<infoC>contraseñas){
+
+    public void setPassword(List<infoC> password) {
         this.password = password;
     }
-
 }

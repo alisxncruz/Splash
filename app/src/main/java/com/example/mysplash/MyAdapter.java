@@ -5,10 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.TextView;
-
-import com.example.myjson.infoC;
 
 import java.io.Serializable;
 import java.util.List;
@@ -18,7 +15,7 @@ public class MyAdapter extends BaseAdapter implements Serializable {
     private List<infoC> list;
     private Context context;
     private LayoutInflater layoutInflater;
-    public static String TAG="Hola";
+
     public MyAdapter (List<infoC> list, Context context)
     {
 
