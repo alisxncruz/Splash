@@ -9,4 +9,7 @@
     <string name="olv">¿Has olvidado tu contraseña?\n¡Lo sentimos!</string>
     <string name="triste">Usuario:\n\n\n\n\n Correo:</string>
     <string name="Incio">BIENVENID@ \nAL INICIO</string>
+    <string name="empty">no puede estar vacio</string>
+    <string name="close">Se cerro</string>
+    <string name="no_exist">Este superheroe no existe</string>
 </resources>

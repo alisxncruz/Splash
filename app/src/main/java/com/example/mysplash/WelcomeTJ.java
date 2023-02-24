@@ -2,9 +2,6 @@ package com.example.mysplash;
 
 import static com.example.mysplash.Registro.archivo;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +15,10 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.mysplash.api.mainApi;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -201,6 +202,11 @@ public class WelcomeTJ extends AppCompatActivity {
             }
             if (id == R.id.item3) {
                 Intent intent= new Intent(WelcomeTJ.this,Login.class);
+                startActivity(intent);
+                return true;
+            }
+            if(id == R.id.item4){
+                Intent intent = new Intent(WelcomeTJ.this, mainApi.class);
                 startActivity(intent);
                 return true;
             }
