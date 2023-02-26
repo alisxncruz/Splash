@@ -1,10 +1,7 @@
 package com.example.mysplash;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -13,40 +10,33 @@ import android.widget.RadioButton;
 import android.widget.Switch;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
+import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.lang.reflect.Type;
-import java.nio.charset.StandardCharsets;
+import com.example.mysplash.BaseDatos.BDUsuarios;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.google.gson.reflect.TypeToken;
 
 public class Registro extends AppCompatActivity {
 
 
     String json = null;
-    String usuario = null;
-    String contrasena =null;
+
+
     public static boolean desliza = false;
     public static boolean  tipoSexo= false;
     public static List<infoRegistro> list = new ArrayList<infoRegistro>();
     public static List<infoC> lista;
     public static final String archivo = "registro.json";
-    private static final String TAG = "Registro";
+    //private static final String TAG = "Registro";
     public static final String KEY = "+4xij6jQRSBdCymMxweza/uMYo+o0EUg";
     public MyDesUtil myDesUtil= new MyDesUtil().addStringKeyBase64(KEY);
 
-    infoRegistro infos = null;
+    /*infoRegistro infos = null;
     Gson gson = null;
     String usr = null;
     String email = null;
-    String mensaje = null;
+    String mensaje = null;*/
 
 
     @Override
@@ -55,7 +45,7 @@ public class Registro extends AppCompatActivity {
         setContentView(R.layout.activity_registro);
 
         lista = new ArrayList<>();
-        infoC info2 = null;
+        infoRegistro info = new infoRegistro();
 
         EditText nomCompleto = findViewById(R.id.nomCompleto);
         EditText edad = findViewById(R.id.edad);
@@ -70,8 +60,6 @@ public class Registro extends AppCompatActivity {
         CheckBox twit = findViewById(R.id.twitter);
         CheckBox ig = findViewById(R.id.insta);
         CheckBox face = findViewById(R.id.fb);
-        AddListeners();
-        jsonList(json);
 
 
         btnRegistrarme.setOnClickListener(new View.OnClickListener() {
@@ -79,13 +67,7 @@ public class Registro extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                infoRegistro infos = new infoRegistro();
-
-                usuario = String.valueOf(user.getText());
-                contrasena = String.valueOf(pswd.getText());
                 String[] redesS = new String[3];
-
-
 
                 if (twit.isChecked() == true) {
                     redesS[0] = "Twitter";
@@ -117,33 +99,32 @@ public class Registro extends AppCompatActivity {
                     tipoSexo = true;
                 }
 
-                if (usuario.equals("")||contrasena.equals("")) {
-                    Log.d(TAG, "no hay nada");
-                    Log.d(TAG, usuario);
-                    Log.d(TAG, contrasena);
-                Toast.makeText(getApplicationContext(), "Por favor, escribe un Usuario y Contraseña", Toast.LENGTH_LONG).show();
-                }
-                else {
-                    if (list.isEmpty()) {
-                        Log.d(TAG, "Registro Completo");
-                        infos.setNomCompleto(String.valueOf(nomCompleto.getText()));
-                        infos.setEdad(Integer.parseInt(String.valueOf(edad.getText().toString())));
-                        infos.setEmail(String.valueOf(email.getText()));
-                        infos.setPswd(Digest.bytesToHex(Digest.createSha1(String.valueOf(pswd.getText()))));
-                        infos.setRedesS(redesS);
-                        infos.setSexo(tipoSexo);
-                        infos.setTelefono(String.valueOf(telefono.getText()));
-                        infos.setUser(usuario);
-                        infos.setPassword(lista);
-                        ListJson(infos, list);
+                info.setNomCompleto(String.valueOf(nomCompleto.getText()));
+                info.setEdad(String.valueOf(edad.getText()));
+                info.setEmail(String.valueOf(email.getText()));
+                info.setPswd(Digest.bytesToHex(Digest.createSha1(String.valueOf(pswd.getText()))));
+                info.setTelefono(String.valueOf(telefono.getText()));
+                info.setUser(String.valueOf(user.getText()));
 
-                    } else {
-                        if (miembros(list, usuario)) {
+                BDUsuarios bdUsuarios = new BDUsuarios(Registro.this);
+                long id = bdUsuarios.saveUser(info);
+                if (id > 0) {
+                    Toast.makeText(Registro.this, "Ya estas registrado", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(Registro.this, Login.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(Registro.this, "No se pudo guardar tu registro", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+}
+                       /* if (miembros(list, usuario)) {
                             Log.d(TAG, "Existe");
                             Toast.makeText(getApplicationContext(), "El usuario ya existe", Toast.LENGTH_LONG).show();
                         } else {
                             infos.setNomCompleto(String.valueOf(nomCompleto.getText()));
-                            infos.setEdad(Integer.parseInt(String.valueOf(edad.getText().toString())));
+                            infos.setEdad(String.valueOf(Integer.parseInt(String.valueOf(edad.getText().toString()))));
                             infos.setEmail(String.valueOf(email.getText()));
                             infos.setPswd(Digest.bytesToHex(Digest.createSha1(String.valueOf(pswd.getText()))));
                             infos.setRedesS(redesS);
@@ -277,6 +258,4 @@ public class Registro extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Error list is null or empty", Toast.LENGTH_LONG).show();
             return;
         }
-    }
-
-}
+    }*/

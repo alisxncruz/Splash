@@ -54,7 +54,7 @@ public class mainApi extends AppCompatActivity {
     }
 
     public void initViews() {
-        txtSearch = findViewById(R.id.txtBusca);
+        txtSearch = findViewById(R.id.txtSearch);
         lblName = findViewById(R.id.lblName);
         lblDescribed = findViewById(R.id.lblDescribed);
         imgSuperHero = findViewById(R.id.imgSuperHero);

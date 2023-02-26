@@ -1,4 +1,4 @@
-package com.example.mysplash;
+package com.example.mysplash.BaseDatos;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -20,8 +20,21 @@ public class UsuariosService extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL(UsuariosContract.UsuarioEntry.getCreateTable());
-        sqLiteDatabase.execSQL(UsuariosContract.MyDataEntry.getCreateTable());
+
+        sqLiteDatabase.execSQL("CREATE TABLE "+ TABLE_USUARIOS + "(" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "nombre TEXT NOT NULL," +
+                "edad INTEGER," +
+                "email TEXT NOT NULL," +
+                "contrasena TEXT NOT NULL," +
+                "telefono TEXT,"+
+                "usuario TEXT NOT NULL UNIQUE)");
+
+        sqLiteDatabase.execSQL("CREATE TABLE " + TABLE_PASS +
+                "(id_pass INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "pass TEXT NOT NULL, " +
+                "red_S TEXT NOT NULL, " +
+                "id_red INTEGER NOT NULL)");
 
     }
 

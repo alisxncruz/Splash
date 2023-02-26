@@ -1,10 +1,7 @@
 package com.example.mysplash;
 
-import static com.example.mysplash.Registro.archivo;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,30 +15,25 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.mysplash.BaseDatos.BDPass;
 import com.example.mysplash.api.mainApi;
-import com.google.gson.Gson;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.List;
 
 public class WelcomeTJ extends AppCompatActivity {
 
 
     private List<infoRegistro> list;
-    public MyDesUtil myDesUtil = new MyDesUtil().addStringKeyBase64(Registro.KEY);
-    public static String TAG = "msj";
+    public static String TAG = "Alison";
     public static String json = null;
     public static ListView listView;
     private List<infoC> listaC;
-    public int pos = 0;
     public static infoRegistro info = null;
+    infoC infoC = new infoC();
+    public int pos = 0;
     EditText editTextR, editTextP;
     Object object = null;
+    public MyDesUtil myDesUtil = new MyDesUtil().addStringKeyBase64(Registro.KEY);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,50 +51,58 @@ public class WelcomeTJ extends AppCompatActivity {
                 }
             }
         }
-        list = new ArrayList<>();
-        list = Login.list;
         editTextR = findViewById(R.id.editTextR);
         editTextP = findViewById(R.id.editTextpass);
         Button btnA = findViewById(R.id.mas);
         Button btnE = findViewById(R.id.delete);
         Button btnEd = findViewById(R.id.editing);
         listView = (ListView) findViewById(R.id.listViewId);
-        listaC = new ArrayList<infoC>();
-        listaC = info.getPassword();
+
+        BDPass bdPass = new BDPass(WelcomeTJ.this);
+        listaC = bdPass.getPass(info.getId_Usr());
+
         MyAdapter myAdapter = new MyAdapter(listaC, getBaseContext());
         listView.setAdapter(myAdapter);
-        btnEd.setEnabled(false);
         btnE.setEnabled(false);
+        btnEd.setEnabled(false);
 
-        if(listaC.isEmpty()){
-            Toast.makeText(getApplicationContext(), "Clic en +", Toast.LENGTH_LONG).show();
-        }
-        Toast.makeText(getApplicationContext(), "Da clic en la contraseña si quieres eliminarla o editarla", Toast.LENGTH_LONG).show();
-
+        if (listaC == null) {
+            Toast.makeText(getApplicationContext(), "Para agregar una contraseña de clic en el menú o en el boton +", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Escriba en los campos", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), String.valueOf(info.getId_Usr()), Toast.LENGTH_LONG).show();
+        }//Aqui
+        Toast.makeText(getApplicationContext(), "Para modificar o eliminar una contraseña de click en ella", Toast.LENGTH_LONG).show();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                editTextR.setText(listaC.get(i).getRedPass());
-                editTextP.setText(listaC.get(i).getPass());
+                infoC = listaC.get(i);
+                editTextR.setText(infoC.getRedPass());
+                editTextP.setText(infoC.getPass());
                 pos = i;
-                btnEd.setEnabled(true);
                 btnE.setEnabled(true);
-                Toast.makeText(getApplicationContext(), "Clic en guardar cambios", Toast.LENGTH_LONG).show();
+                btnEd.setEnabled(true);
+                Toast.makeText(getApplicationContext(), "Para guardar los cambios de click en guardar cambios", Toast.LENGTH_LONG).show();
             }
         });
 
         btnE.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listaC.remove(pos);
-                info.setPassword(listaC);
-                MyAdapter myAdapter = new MyAdapter(listaC, getBaseContext());
-                listView.setAdapter(myAdapter);
-                editTextP.setText("");
-                editTextR.setText("");
-                Toast.makeText(getApplicationContext(), "Eliminada", Toast.LENGTH_LONG).show();
-                btnE.setEnabled(false);
-                btnEd.setEnabled(false);
+                BDPass bdPass = new BDPass(WelcomeTJ.this);
+                boolean id = bdPass.eliminarContrasena(info.getId_Usr(), infoC.getRedPass(), infoC.getPass());
+                if (id) {
+                    listaC = bdPass.getPass(info.getId_Usr());
+                    MyAdapter myAdapter = new MyAdapter(listaC, getBaseContext());
+                    listView.setAdapter(myAdapter);
+                    editTextP.setText("");
+                    editTextR.setText("");
+                    Toast.makeText(getApplicationContext(), "Se eliminó la contraseña", Toast.LENGTH_LONG).show();
+                    btnE.setEnabled(false);
+                    btnEd.setEnabled(false);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Error al eliminar", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -120,12 +120,21 @@ public class WelcomeTJ extends AppCompatActivity {
                     infoC info2 = new infoC();
                     info2.setRedPass(red);
                     info2.setPass(pswd);
-                    listaC.add(info2);
-                    MyAdapter myAdapter = new MyAdapter(listaC, getBaseContext());
-                    listView.setAdapter(myAdapter);
-                    editTextP.setText("");
-                    editTextR.setText("");
-                    Toast.makeText(getApplicationContext(), "Contraseña guardada", Toast.LENGTH_LONG).show();
+                    info2.setId_red(info.getId_Usr());
+                    Toast.makeText(getApplicationContext(), String.valueOf(info.getId_Usr()), Toast.LENGTH_LONG).show();
+                    BDPass bdPass = new BDPass(WelcomeTJ.this);
+                    long id = bdPass.AnadirPass(info2);
+                    if (id > 0) {
+                        listaC = bdPass.getPass(info.getId_Usr());
+                        MyAdapter myAdapter = new MyAdapter(listaC, getBaseContext());
+                        listView.setAdapter(myAdapter);
+                        editTextP.setText("");
+                        editTextR.setText("");
+                        Toast.makeText(getApplicationContext(), info2.getRedPass() + " " + info2.getPass(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(WelcomeTJ.this, "REGISTRO GURADADO", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(WelcomeTJ.this, "ERROR AL GUARDAR REGISTRO", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         });
@@ -134,24 +143,26 @@ public class WelcomeTJ extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                String redS = String.valueOf(editTextR.getText());
-                String pswd = String.valueOf(editTextP.getText());
-
-                if (redS.equals("") || pswd.equals("")) {
-                    Toast.makeText(getApplicationContext(), "Llena los campos", Toast.LENGTH_LONG).show();
+                String red = String.valueOf(editTextR.getText());
+                String contra = String.valueOf(editTextP.getText());
+                if (red.equals("") || contra.equals("")) {
+                    Toast.makeText(getApplicationContext(), "Llene los campos", Toast.LENGTH_LONG).show();
                 } else {
-                    listaC.get(pos).setRedPass(redS);
-                    listaC.get(pos).setPass(pswd);
-                    info.setPassword(listaC);
-                    MyAdapter myAdapter = new MyAdapter(listaC, getBaseContext());
-                    listView.setAdapter(myAdapter);
-                    editTextP.setText("");
-                    editTextR.setText("");
-                    Toast.makeText(getApplicationContext(), "Contraseña modificada", Toast.LENGTH_LONG).show();
-                    btnE.setEnabled(false);
-                    btnEd.setEnabled(false);
+                    BDPass bdPass = new BDPass(WelcomeTJ.this);
+                    boolean id = bdPass.EditarContra(red, contra, info.getId_Usr(), infoC.getId_pass());
+                    if (id) {
+                        listaC = bdPass.getPass(info.getId_Usr());
+                        MyAdapter myAdapter = new MyAdapter(listaC, getBaseContext());
+                        listView.setAdapter(myAdapter);
+                        editTextR.setText("");
+                        editTextP.setText("");
+                        Toast.makeText(getApplicationContext(), "Se modificó la contraseña", Toast.LENGTH_LONG).show();
+                        btnE.setEnabled(false);
+                        btnEd.setEnabled(false);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Error al modificar", Toast.LENGTH_LONG).show();
+                    }
                 }
-
             }
         });
 
@@ -179,86 +190,77 @@ public class WelcomeTJ extends AppCompatActivity {
                 infoC info2 = new infoC();
                 info2.setPass(pswd);
                 info2.setRedPass(red);
-                listaC.add(info2);
-                MyAdapter myAdapter = new MyAdapter(listaC, getBaseContext());
-                listView.setAdapter(myAdapter);
-                editTextP.setText("");
-                editTextR.setText("");
-                Toast.makeText(getApplicationContext(), "Se agregó la contraseña", Toast.LENGTH_LONG).show();
+                info2.getId_red();
+                Toast.makeText(getApplicationContext(), String.valueOf(info.getId_Usr()), Toast.LENGTH_LONG).show();
+                BDPass bdPass = new BDPass(WelcomeTJ.this);
+                long pw = bdPass.AnadirPass(info2);
+                if (pw > 0) {
+                    listaC = bdPass.getPass(info.getId_Usr());
+                    MyAdapter myAdapter = new MyAdapter(listaC, getBaseContext());
+                    listView.setAdapter(myAdapter);
+                    editTextP.setText("");
+                    editTextR.setText("");
+                    Toast.makeText(getApplicationContext(), info2.getRedPass() + " " + info2.getPass(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(WelcomeTJ.this, "REGISTRO GUARDADO", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(WelcomeTJ.this, "ERROR AL GUARDAR REGISTRO", Toast.LENGTH_LONG).show();
+                }
             }
+        }
+        if (id == R.id.item2) {
+            Intent intent = new Intent(WelcomeTJ.this, mainApi.class);
+            startActivity(intent);
+            return true;
+
+        }
+        if (id == R.id.item3) {
+            Intent intent = new Intent(WelcomeTJ.this, Login.class);
+            startActivity(intent);
             return true;
         }
-            if (id == R.id.item2) {
-                int i =0;
-                for(infoRegistro info : list){
-                    if(info.getUser().equals(info.getUser())){
-                        list.get(i).setPassword(listaC);
-                    }
-                    i++;
-                }
-                ListJson(info,list);
-                return true;
-
-            }
-            if (id == R.id.item3) {
-                Intent intent= new Intent(WelcomeTJ.this,Login.class);
-                startActivity(intent);
-                return true;
-            }
-            if(id == R.id.item4){
-                Intent intent = new Intent(WelcomeTJ.this, mainApi.class);
-                startActivity(intent);
-                return true;
-            }
 
         return super.onOptionsItemSelected(item);
     }
 
-        private void toast ( int i ){
-         Toast.makeText(getBaseContext(), listaC.get(i).getPass(), Toast.LENGTH_SHORT);
+        /*private void toast ( int i ){
+            Toast.makeText(getBaseContext(), listaC.get(i).getPass(), Toast.LENGTH_SHORT);
         }
 
-    public void ListJson(infoRegistro info1,List<infoRegistro> list){
-        Gson gson =null;
-        String json= null;
-        gson =new Gson();
-        list.add(info1);
-        json =gson.toJson(list, ArrayList.class);
-        if (json == null)
-        {
-            Log.d(TAG, "Error json");
+        public void ListJson (infoRegistro info1, List < infoRegistro > list){
+            Gson gson = null;
+            String json = null;
+            gson = new Gson();
+            list.add(info1);
+            json = gson.toJson(list, ArrayList.class);
+            if (json == null) {
+                Log.d(TAG, "Error json");
+            } else {
+                Log.d(TAG, json);
+                json = myDesUtil.cifrar(json);
+                Log.d(TAG, json);
+                writeFile(json);
+            }
+            Toast.makeText(getApplicationContext(), "okay", Toast.LENGTH_LONG).show();
         }
-        else
-        {
-            Log.d(TAG, json);
-            json = myDesUtil.cifrar(json);
-            Log.d(TAG, json);
-            writeFile(json);
+        private boolean writeFile (String text){
+            File file = null;
+            FileOutputStream fileOutputStream = null;
+            try {
+                file = getFile();
+                fileOutputStream = new FileOutputStream(file);
+                fileOutputStream.write(text.getBytes(StandardCharsets.UTF_8));
+                fileOutputStream.close();
+                Log.d(TAG, "Hola");
+                return true;
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return false;
         }
-        Toast.makeText(getApplicationContext(), "okay", Toast.LENGTH_LONG).show();
-    }
-    private boolean writeFile(String text){
-        File file =null;
-        FileOutputStream fileOutputStream =null;
-        try{
-            file=getFile();
-            fileOutputStream = new FileOutputStream( file );
-            fileOutputStream.write( text.getBytes(StandardCharsets.UTF_8) );
-            fileOutputStream.close();
-            Log.d(TAG, "Hola");
-            return true;
+        private File getFile () {
+            return new File(getDataDir(), archivo);
         }
-        catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-        return false;
-    }
-    private File getFile(){
-        return new File(getDataDir(),archivo);
-    }
+    }*/
 }

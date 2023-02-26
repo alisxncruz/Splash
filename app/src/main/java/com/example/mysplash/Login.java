@@ -1,41 +1,30 @@
 package com.example.mysplash;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.Serializable;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
+import com.example.mysplash.BaseDatos.BDUsuarios;
+
 import java.util.List;
 
 public class Login extends AppCompatActivity {
 
     public static final String KEY = "+4xij6jQRSBdCymMxweza/uMYo+o0EUg";
+    public MyDesUtil myDesUtil = new MyDesUtil().addStringKeyBase64(KEY);
     private String testClaro = "Hola mundo";
-    private String testDescifrado;
 
     public static List<infoRegistro> list;
-    public static String TAG = "message";
-    public static String TOG = "error";
-    public static  String json = null;
+
     public static String usuario;
     public static String pass;
-    public MyDesUtil myDesUtil = new MyDesUtil().addStringKeyBase64(KEY);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,16 +37,14 @@ public class Login extends AppCompatActivity {
         Button button2 = findViewById(R.id.loginId);
         EditText user1 = findViewById(R.id.userNameId);
         EditText contra = findViewById(R.id.passwordId);
-        AddLIsteners();
-        jsonList(json);
+
 
 
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 usuario = String.valueOf(user1.getText());
-                pass = Digest.bytesToHex(Digest.createSha1(String.valueOf(contra.getText())));
-                //pass=String.valueOf(pswd.getText());
+                pass = (String.valueOf(contra.getText()));
                 paginaInicio(usuario, pass);
             }
         });
@@ -82,21 +69,26 @@ public class Login extends AppCompatActivity {
     }
 
     public void paginaInicio(String usuario , String contrasena){
-        Boolean ingresa = Boolean.FALSE;
-        for(infoRegistro info : list){
-            if(info.getUser().equals(usuario) && info.getPswd().equals(pass)){
-                Intent intent = new Intent(Login.this, WelcomeTJ.class);
-                intent.putExtra("Info", info);
-                startActivity(intent);
-                ingresa = Boolean.TRUE;
+        if(usuario.equals("")||contrasena.equals("")){
+            Toast.makeText(getApplicationContext(), "Completa los campos", Toast.LENGTH_LONG).show();
+        }else{
+            BDUsuarios bdUsuarios = new BDUsuarios(Login.this);
+            infoRegistro info = bdUsuarios.GetUsuario(usuario);
+            if(info != null){
+                if (info.getPswd().equals(contrasena)){
+                    Toast.makeText(getApplicationContext(), "Iniciaste Sesión", Toast.LENGTH_LONG);
+                    Intent intent = new Intent(Login.this, WelcomeTJ.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(getApplicationContext(), "No se encontro este usuario", Toast.LENGTH_LONG).show();
+                }
             }
-        }
-        if(ingresa == Boolean.FALSE){
-            Toast.makeText(getApplicationContext(), "Usuario y/o contraseña incorrectos", Toast.LENGTH_LONG).show();
         }
     }
 
-    public boolean AddLIsteners(){
+}
+
+  /*  public boolean AddLIsteners(){
         if(!isFileExits()){
             return false;
         }
@@ -156,6 +148,5 @@ public class Login extends AppCompatActivity {
         {
             return false;
         }
-        return file.isFile() && file.exists();
-    }
-}
+        return file.isFile() && file.exists();*/
+

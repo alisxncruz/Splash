@@ -1,10 +1,13 @@
-package com.example.mysplash;
+package com.example.mysplash.BaseDatos;
 
-import static com.example.mysplash.UsuariosService.TABLE_PASS;
-import static com.example.mysplash.UsuariosService.TABLE_USUARIOS;
+import static com.example.mysplash.BaseDatos.UsuariosService.TABLE_PASS;
+import static com.example.mysplash.BaseDatos.UsuariosService.TABLE_USUARIOS;
 
 import android.content.ContentValues;
 import android.provider.BaseColumns;
+
+import com.example.mysplash.infoC;
+import com.example.mysplash.infoRegistro;
 
 import java.io.Serializable;
 
@@ -16,19 +19,14 @@ public class UsuariosContract implements Serializable {
 
         public static final String getCreateTable(){
 
-            String table = "CREATE TABLE "+TABLE_USUARIOS+ "(" +
+            String table = "CREATE TABLE "+ TABLE_USUARIOS + "(" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    "nombre TEXT," +
+                    "nombre TEXT NOT NULL," +
                     "edad INTEGER," +
                     "email TEXT NOT NULL," +
                     "contrasena TEXT NOT NULL," +
-                    "redS1 TEXT," +
-                    "redS2 TEXT,"+
-                    "redS3 TEXT," +
-                    "sexo INTEGER," +
                     "telefono TEXT,"+
-                    "usuario TEXT NOT NULL UNIQUE," +
-                    ")";
+                    "usuario TEXT NOT NULL UNIQUE)";
             return table;
         }
 
@@ -39,10 +37,6 @@ public class UsuariosContract implements Serializable {
             values.put("edad", info.getEdad());
             values.put("email", info.getEmail());
             values.put("contrasena", info.getPswd());
-            values.put("redS1", info.getRedesS());
-            values.put("redS2", info.getRedesS());
-            values.put("redS3", info.getRedesS());
-            values.put("sexo", info.getSexo());
             values.put("telefono", info.getTelefono());
             values.put("usuario", info.getUser());
             return values;
@@ -51,15 +45,16 @@ public class UsuariosContract implements Serializable {
 
     public abstract static class MyDataEntry implements BaseColumns{
         public static final String getCreateTable(){
-            String table ="CREATE TABLE "+TABLE_PASS+"(" +
-                    "id_pass INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    "pass TEXT NOT NULL," +
-                    "red_S TEXT NOT NULL)";
+            String table ="CREATE TABLE " + TABLE_PASS +
+                    "(id_pass INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "pass TEXT NOT NULL, " +
+                    "red_S TEXT NOT NULL, " +
+                    "id_red INTEGER NOT NULL)";
             return table;
         }
         public static ContentValues toContentValues (infoC infoc){
             ContentValues values = new ContentValues();
-            values.put("id_pass", infoc.getId_pass());
+            values.put("id_red", infoc.getId_red());
             values.put("pass", infoc.getPass());
             values.put("red_S", infoc.getRedPass());
             return values;

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class infoRegistro implements Serializable {
+
+    private int id_Usr;
     private String nomCompleto;
     private String edad;
     private String telefono;
@@ -14,6 +16,10 @@ public class infoRegistro implements Serializable {
     private String[] redesS;
     private Boolean sexo;
     private List<infoC> password = new ArrayList<>();
+
+    public infoRegistro(){
+
+    }
 
     public String getNomCompleto() {
         return nomCompleto;
@@ -63,7 +69,7 @@ public class infoRegistro implements Serializable {
         this.user = user;
     }
 
-    public Byte getRedesS() {
+    public String[] getRedesS() {
         return redesS;
     }
 
@@ -85,5 +91,13 @@ public class infoRegistro implements Serializable {
 
     public void setPassword(List<infoC> password) {
         this.password = password;
+    }
+
+    public int getId_Usr() {
+        return id_Usr;
+    }
+
+    public void setId_Usr(int id_Usr) {
+        this.id_Usr = id_Usr;
     }
 }
